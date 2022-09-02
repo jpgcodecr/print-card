@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            width: 600px;
+            font-size: 10pt;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        .appointmentReminder {
+            width: 310px;
+            height: 160px;
+            padding: 20px;
+            background-color: #FFF;
+            border: 1px dotted #CCC;
+        }
+
+        .card-content {
+            margin: 0;
+            padding: 0;
+        }
+
+        .editable-item,
+        .title {
+            width: 300px;
+            margin-top: 0px;
+            list-style: none;
+        }
+
+        .add-btn,
+        .print {
+            margin-top: 10px;
+            margin-left: 5px;
+        }
+
+        .title input {
+            height: 25px;
+            font-size: 14pt;
+            font-weight: 600;
+        }
+
+        .title input:-webkit-input-placeholder {
+            color: #CCC;
+        }
+
+        input {
+            margin: 0px;
+            width: 250px;
+            height: 20px;
+            padding: 0px;
+            resize: none;
+            display: inline-block;
+        }
+
+        input:focus,
+        input:hover {
+            border: 1px dashed lightgrey;
+        }
+
+        input {
+            border: none;
+            outline: none;
+        }
+
+        .add-btn,
+        .icon-remove {
+            cursor: pointer;
+        }
+
+        .icon-remove {
+            display: none;
+        }
+
+        .editable-item:hover .icon-remove,
+        .editable-item:focus .icon-remove,
+        input:focus+.icon-remove {
+            display: inline;
+            font-size: 22px;
+            color: #f86f69;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .add-btn:before {
+            font-size: 22px;
+            color: #95dd6f;
+            content: "\f067";
+            letter-spacing: 14px;
+            display: inline-block;
+            vertical-align: middle;
+            font-family: FontAwesome;
+        }
+
+        .print {
+            margin: 10px 5px;
+        }
+
+        .print a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .print:before {
+            font-size: 22px;
+            content: "\f02f";
+            letter-spacing: 5px;
+            display: inline-block;
+            vertical-align: middle;
+            font-family: FontAwesome;
+        }
+
+
+        @media print {
+            @media print {
+                body{
+                    margin: 0;
+                    width: 100%;
+                    padding: 0.1in;
+                }
+                .appointmentReminder {
+                    width: 100%;
+                    height: 1.89in;
+                    margin: 0 auto;
+                }
+                @page {
+                    margin: 0;
+                    padding: 0;
+                    size: 3.6in 2.10in;
+                }
+            }
+
+            .add-btn,
+            .print {
+                display: none;
+            }
+
+            .editable-item .icon-remove {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="appointmentReminder">
+        <form>
+            <ul class="card-content">
+                <li class="title"><input contenteditable="true" maxlength="35" placeholder="Appointment Reminder" />
+                </li>
+                <li class="editable-item">
+                    <input maxlength="50" autofocus="autofocus" placeholder="Click to edit" class="item1-textbox" />
+                    <span class="icon-remove" title="Remove line"></span>
+                </li>
+            </ul>
+        </form>
+    </div>
+
+    <div class="add-btn">Add line</div>
+    <div class="print">
+        <a href="javascript:window.print()"><span>Print Card</span></a>
+    </div>
+
+    <script>
+
+        const addBtn = document.querySelector('.add-btn');
+        const cardContent = document.querySelector('.card-content');
+        const removeBtn = document.querySelector('.icon-remove');
+
+        addBtn.addEventListener('click', () => {
+            cardContent.insertAdjacentHTML('beforeEnd', `
+                    <li class="editable-item">
+                        <input maxlength="50" autofocus="autofocus" placeholder= "Click to edit" />
+                        <span class="icon-remove" title="Remove item"></span>
+                    </li>
+            `);
+        })
+
+        // Attach remove button functionality
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('icon-remove')) {
+                e.target.parentNode.remove();
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
